@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../static/css/spring-core.css"
+          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+
+    <title>Opportunities</title>
+</head>
+<body>
+    <div class="container">
+        <div th:if="${not #lists.isEmpty(opportunities)}">
+            <h2>Product List</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Currency</th>
+                    <th>Closing Date</th>
+                    <th>Closed</th>
+                    <th>Won</th>
+                    <th>Deleted</th>
+                </tr>
+
+                <tr th:each="opportunity : ${opportunities}">
+                    <td th:text="${opportunity.name}"></td>
+                    <td th:text="${opportunity.description}"></td>
+                    <td th:text="${opportunity.amount}"></td>
+                    <td th:text="${opportunity.currencyIsoCode}"></td>
+                    <td th:text="${opportunity.isClosed}"></td>
+                    <td th:text="${opportunity.isWon}"></td>
+                    <td th:text="${opportunity.isDeleted}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <a href="/opportunity/new">New Product</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
