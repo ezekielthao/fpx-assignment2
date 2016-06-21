@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by Zeke on 6/21/2016.
@@ -21,24 +22,40 @@ public class OpportunityCtrl {
         this.opportunityService = opportunityService;
     }
 
-//    @RequestMapping({"/list", "/"})
-//    public String listCustomers(Model model){
-//        model.addAttribute("customers", customerService.listAll());
-//        return "customer/list";
-//    }
-
     @RequestMapping({"/list", "/"})
     public String listOpportunities(Model model) {
         model.addAttribute("opportunities", opportunityService.listAll());
         return "opportunities";
     }
 
-    @RequestMapping("show/{id}")
+    @RequestMapping("/show/{id}")
     public String showOpportunity(@PathVariable Long id, Model model) {
         model.addAttribute("opportunity", opportunityService.getById(id));
         return "opportunity";
     }
 
+    @RequestMapping("/new")
+    public String newCustomer(Model model){
+        model.addAttribute("customer", new Opportunity());
+        return "opportunityform";
+    }
 
+    @RequestMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("opportunity", opportunityService.getById(id));
+        return "opportunityform";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String saveOrUpdate(Opportunity opportunity) {
+        Opportunity newOpportunity = opportunityService.saveOrUpdate(opportunity);
+        return "redirect:/opportunity/show/" + newOpportunity.getId();
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        opportunityService.delete(id);
+        return "redirect:/opportunity/list";
+    }
 
 }
