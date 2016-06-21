@@ -35,7 +35,7 @@ public class OpportunityCtrl {
     }
 
     @RequestMapping("/new")
-    public String newCustomer(Model model){
+    public String newOpportunity(Model model){
         model.addAttribute("customer", new Opportunity());
         return "opportunityform";
     }
