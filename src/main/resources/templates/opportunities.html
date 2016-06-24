@@ -22,6 +22,7 @@
             <table class="table table-striped">
                 <tr>
                     <th>Name</th>
+                    <th>ID</th>
                     <th>Description</th>
                     <th>Amount</th>
                     <th>Currency</th>
@@ -33,6 +34,7 @@
 
                 <tr th:each="opportunity : ${opportunities}">
                     <td th:text="${opportunity.name}"></td>
+                    <td th:text="${opportunity.id}"></td>
                     <td th:text="${opportunity.description}"></td>
                     <td th:text="${opportunity.amount}"></td>
                     <td th:text="${opportunity.currencyIsoCode}"></td>
@@ -44,7 +46,7 @@
         </div>
         <div class="row">
             <div class="col-sm-3">
-                <a href="/opportunity/new">New Product</a>
+                <a href="/opportunity/new">New Opportunity</a>
             </div>
         </div>
     </div>

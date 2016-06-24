@@ -29,19 +29,20 @@ public class OpportunityCtrl {
     }
 
     @RequestMapping("/show/{id}")
-    public String showOpportunity(@PathVariable Long id, Model model) {
+    public String showOpportunity(@PathVariable String id, Model model) {
         model.addAttribute("opportunity", opportunityService.getById(id));
         return "opportunity";
     }
 
     @RequestMapping("/new")
     public String newOpportunity(Model model){
-        model.addAttribute("customer", new Opportunity());
+
+        model.addAttribute("opportunity", new Opportunity());
         return "opportunityform";
     }
 
     @RequestMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
+    public String edit(@PathVariable String id, Model model) {
         model.addAttribute("opportunity", opportunityService.getById(id));
         return "opportunityform";
     }
@@ -53,7 +54,7 @@ public class OpportunityCtrl {
     }
 
     @RequestMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable String id) {
         opportunityService.delete(id);
         return "redirect:/opportunity/list";
     }

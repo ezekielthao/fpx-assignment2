@@ -59,8 +59,8 @@ public class OpportunityCtrlTest {
     @Test
     public void testShowOpportunity() throws Exception {
         Opportunity opportunity = new Opportunity();
-        opportunity.setId(new Long(1));
-        when(opportunityService.getById(new Long(1))).thenReturn(opportunity);
+        opportunity.setId("1");
+        when(opportunityService.getById("1")).thenReturn(opportunity);
 
         mockMvc.perform(get("/opportunity/show/1"))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class OpportunityCtrlTest {
 
     @Test
     public void testEdit() throws Exception {
-        when(opportunityService.getById(new Long(1))).thenReturn(new Opportunity());
+        when(opportunityService.getById("1")).thenReturn(new Opportunity());
 
         mockMvc.perform(get("/opportunity/edit/1"))
                 .andExpect(status().isOk())
@@ -91,13 +91,12 @@ public class OpportunityCtrlTest {
 
     @Test
     public void testSaveOrUpdate() throws Exception {
-        Long id = new Long(1);
         String name = "Java Developer";
         String description = "fpx Java Developer";
         BigDecimal amount = new BigDecimal("80000.00");
 
         Opportunity opportunity = new Opportunity();
-        opportunity.setId(id);
+        opportunity.setId("1");
         opportunity.setDescription(description);
         opportunity.setAmount(amount);
         opportunity.setName(name);
@@ -112,7 +111,7 @@ public class OpportunityCtrlTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/opportunity/show/1"))
                 .andExpect(model().attribute("opportunity", instanceOf(Opportunity.class)))
-                .andExpect(model().attribute("opportunity", hasProperty("id", is(id))))
+                .andExpect(model().attribute("opportunity", hasProperty("id", is("1"))))
                 .andExpect(model().attribute("opportunity", hasProperty("name", is(name))))
                 .andExpect(model().attribute("opportunity", hasProperty("description", is(description))))
                 .andExpect(model().attribute("opportunity", hasProperty("amount", is(amount))));
@@ -120,7 +119,7 @@ public class OpportunityCtrlTest {
         ArgumentCaptor<Opportunity> boundOpportunity = ArgumentCaptor.forClass(Opportunity.class);
         verify(opportunityService).saveOrUpdate(boundOpportunity.capture());
 
-        assertEquals(id, boundOpportunity.getValue().getId());
+        assertEquals("1", boundOpportunity.getValue().getId());
         assertEquals(name, boundOpportunity.getValue().getName());
         assertEquals(description, boundOpportunity.getValue().getDescription());
         assertEquals(amount, boundOpportunity.getValue().getAmount());
@@ -128,7 +127,7 @@ public class OpportunityCtrlTest {
 
     @Test
     public void testDelete() throws Exception {
-        Long id = new Long(1);
+        String id = "1";
         mockMvc.perform(get("/opportunity/delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/opportunity/list"));

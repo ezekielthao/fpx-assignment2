@@ -1,8 +1,6 @@
 package com.zeke.fpx.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,9 +13,7 @@ import java.util.Date;
 public class Opportunity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    private String id;
     private String name;
     private BigDecimal amount;
     private Date closeDate;
@@ -26,12 +22,15 @@ public class Opportunity {
     private Byte[] isClosed;
     private Byte[] isDeleted;
     private Byte[] isWon;
+    private boolean isClosedBool;
+    private boolean isDeletedBool;
+    private boolean isWonBool;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -97,5 +96,29 @@ public class Opportunity {
 
     public void setIsWon(Byte[] isWon) {
         this.isWon = isWon;
+    }
+
+    public boolean isClosedBool() {
+        return isClosedBool;
+    }
+
+    public void setClosedBool(boolean closedBool) {
+        isClosedBool = closedBool;
+    }
+
+    public boolean isDeletedBool() {
+        return isDeletedBool;
+    }
+
+    public void setDeletedBool(boolean deletedBool) {
+        isDeletedBool = deletedBool;
+    }
+
+    public boolean isWonBool() {
+        return isWonBool;
+    }
+
+    public void setWonBool(boolean wonBool) {
+        isWonBool = wonBool;
     }
 }
