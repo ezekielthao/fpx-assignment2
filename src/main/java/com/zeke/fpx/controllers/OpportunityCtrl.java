@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by Zeke on 6/21/2016.
  */
 @Controller
-@RequestMapping("/opportunity")
 public class OpportunityCtrl {
     private OpportunityService opportunityService;
 
@@ -22,38 +21,38 @@ public class OpportunityCtrl {
         this.opportunityService = opportunityService;
     }
 
-    @RequestMapping({"/list", "/"})
+    @RequestMapping({"/opportunity/list", "/opportunity", "/"})
     public String listOpportunities(Model model) {
         model.addAttribute("opportunities", opportunityService.listAll());
         return "opportunities";
     }
 
-    @RequestMapping("/show/{id}")
+    @RequestMapping("/opportunity/show/{id}")
     public String showOpportunity(@PathVariable String id, Model model) {
         model.addAttribute("opportunity", opportunityService.getById(id));
         return "opportunity";
     }
 
-    @RequestMapping("/new")
+    @RequestMapping("/opportunity/new")
     public String newOpportunity(Model model){
 
         model.addAttribute("opportunity", new Opportunity());
         return "opportunityform";
     }
 
-    @RequestMapping("/edit/{id}")
+    @RequestMapping("/opportunity/edit/{id}")
     public String edit(@PathVariable String id, Model model) {
         model.addAttribute("opportunity", opportunityService.getById(id));
         return "opportunityform";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value="/opportunity", method = RequestMethod.POST)
     public String saveOrUpdate(Opportunity opportunity) {
         Opportunity newOpportunity = opportunityService.saveOrUpdate(opportunity);
         return "redirect:/opportunity/show/" + newOpportunity.getId();
     }
 
-    @RequestMapping("/delete/{id}")
+    @RequestMapping("/opportunity/delete/{id}")
     public String delete(@PathVariable String id) {
         opportunityService.delete(id);
         return "redirect:/opportunity/list";
