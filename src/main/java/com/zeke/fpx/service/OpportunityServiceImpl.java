@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Zeke on 6/20/2016.
@@ -16,6 +16,9 @@ import java.util.Map;
 @Service
 public class OpportunityServiceImpl implements OpportunityService {
     //private Map<String, Opportunity> opportunityMap;
+
+    private final Byte[] YESBYTE = {1};
+    private final Byte[] NOBYTE = {0};
 
     private EntityManagerFactory emf;
 
@@ -34,15 +37,15 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Override
     public Opportunity getById(String id) {
         EntityManager em = emf.createEntityManager();
-
-        return em.find(Opportunity.class, id);
+        Opportunity opportunity = em.find(Opportunity.class, id);
+        opportunity = processOpportunity(opportunity);
+        return opportunity;
     }
 
     @Override
     public Opportunity saveOrUpdate(Opportunity opportunity) {
         EntityManager em = emf.createEntityManager();
         opportunity = prePersistData(opportunity);
-
         em.getTransaction().begin();
         Opportunity savedOpportunity = em.merge(opportunity);
         em.getTransaction().commit();
@@ -60,22 +63,40 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     public Opportunity prePersistData(Opportunity opportunity) {
-        Byte[] yesByte = {1};
-        Byte[] noByte = {0};
-        if (opportunity.isClosedBool()) {
-            opportunity.setIsClosed(yesByte);
+        if (opportunity.isClosed()) {
+            opportunity.setIsClosed(YESBYTE);
         } else {
-            opportunity.setIsClosed(noByte);
+            opportunity.setIsClosed(NOBYTE);
         }
-        if (opportunity.isWonBool()) {
-            opportunity.setIsWon(yesByte);
+        if (opportunity.isWon()) {
+            opportunity.setIsWon(YESBYTE);
         } else {
-            opportunity.setIsWon(noByte);
+            opportunity.setIsWon(NOBYTE);
         }
-        if (opportunity.isDeletedBool()) {
-            opportunity.setIsDeleted(yesByte);
+        if (opportunity.isDeleted()) {
+            opportunity.setIsDeleted(YESBYTE);
         } else {
-            opportunity.setIsDeleted(noByte);
+            opportunity.setIsDeleted(NOBYTE);
+        }
+
+        return opportunity;
+    }
+
+    public Opportunity processOpportunity(Opportunity opportunity) {
+        if (Arrays.equals(opportunity.getIsClosed(), NOBYTE)) {
+            opportunity.setClosed(false);
+        } else {
+            opportunity.setClosed(true);
+        }
+        if (Arrays.equals(opportunity.getIsDeleted(), NOBYTE)) {
+            opportunity.setDeleted(false);
+        } else {
+            opportunity.setDeleted(true);
+        }
+        if (Arrays.equals(opportunity.getIsWon(), NOBYTE)) {
+            opportunity.setWon(false);
+        } else {
+            opportunity.setWon(true);
         }
 
         return opportunity;

@@ -21,6 +21,7 @@ import java.util.List;
 @SpringApplicationConfiguration(IntegrationConfig.class)
 public class OpportunityServiceImplTest {
     private OpportunityService opportunityService;
+    private Byte[] noBinary = {0};
 
     @Autowired
     public void setOpportunityService(OpportunityService opportunityService) {
@@ -29,16 +30,12 @@ public class OpportunityServiceImplTest {
 
     @Before
     public void setup() {
-        Byte[] noBinary = {0,0};
         Opportunity opportunity1 = new Opportunity();
         opportunity1.setId("1");
         opportunity1.setAmount(new BigDecimal("15000.00"));
         opportunity1.setCloseDate(new Date());
         opportunity1.setCurrencyIsoCode("USD");
         opportunity1.setDescription("Java Contractor");
-        opportunity1.setIsClosed(noBinary);
-        opportunity1.setIsDeleted(noBinary);
-        opportunity1.setIsWon(noBinary);
         opportunityService.saveOrUpdate(opportunity1);
 
         Opportunity opportunity2 = new Opportunity();
@@ -47,9 +44,6 @@ public class OpportunityServiceImplTest {
         opportunity2.setCloseDate(new Date());
         opportunity2.setCurrencyIsoCode("USD");
         opportunity2.setDescription(".NET Contractor");
-        opportunity2.setIsClosed(noBinary);
-        opportunity2.setIsDeleted(noBinary);
-        opportunity2.setIsWon(noBinary);
         opportunityService.saveOrUpdate(opportunity2);
 
         Opportunity opportunity3 = new Opportunity();
@@ -58,9 +52,6 @@ public class OpportunityServiceImplTest {
         opportunity3.setCloseDate(new Date());
         opportunity3.setCurrencyIsoCode("USD");
         opportunity3.setDescription("DBA Contractor");
-        opportunity3.setIsClosed(noBinary);
-        opportunity3.setIsDeleted(noBinary);
-        opportunity3.setIsWon(noBinary);
         opportunityService.saveOrUpdate(opportunity3);
 
         Opportunity opportunity4 = new Opportunity();
@@ -69,9 +60,6 @@ public class OpportunityServiceImplTest {
         opportunity4.setCloseDate(new Date());
         opportunity4.setCurrencyIsoCode("USD");
         opportunity4.setDescription("JavaScript Contractor");
-        opportunity4.setIsClosed(noBinary);
-        opportunity4.setIsDeleted(noBinary);
-        opportunity4.setIsWon(noBinary);
         opportunityService.saveOrUpdate(opportunity4);
 
         Opportunity opportunity5 = new Opportunity();
@@ -80,9 +68,6 @@ public class OpportunityServiceImplTest {
         opportunity5.setCloseDate(new Date());
         opportunity5.setCurrencyIsoCode("USD");
         opportunity5.setDescription("AWS Contractor");
-        opportunity5.setIsClosed(noBinary);
-        opportunity5.setIsDeleted(noBinary);
-        opportunity5.setIsWon(noBinary);
         opportunityService.saveOrUpdate(opportunity5);
     }
 
@@ -93,12 +78,36 @@ public class OpportunityServiceImplTest {
     }
 
     @Test
-    public void testPrePersistData() throws Exception {
-        Opportunity opportunity = new Opportunity();
-
+    public void testGetById() throws Exception {
+        Opportunity opportunity = opportunityService.getById("1");
+        assert opportunity.getId() == "1";
     }
 
+    @Test
+    public void testSaveOrUpdate() throws Exception {
+        Opportunity opportunity = new Opportunity();
+        opportunity.setId("6");
+        Opportunity savedOpportunity = opportunityService.saveOrUpdate(opportunity);
+        assert savedOpportunity.getId() == "6";
+    }
 
+    @Test
+    public void testDelete() throws Exception {
+        opportunityService.delete("1");
+        List<Opportunity> opportunities = (List<Opportunity>) opportunityService.listAll();
+        assert opportunities.size() == 4;
+    }
 
+    @Test
+    public void testPrePersistData() throws Exception {
+        Opportunity opportunity = opportunityService.getById("1");
+        assert opportunity.getIsDeleted() != null;
+    }
 
+    @Test
+    public void testProcessOpportunity() throws Exception {
+        Opportunity opportunity = opportunityService.getById("1");
+        Boolean test = opportunity.isWon();
+        assert opportunity.isWon() == false;
+    }
 }

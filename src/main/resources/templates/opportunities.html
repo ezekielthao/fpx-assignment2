@@ -27,9 +27,6 @@
                     <th>Amount</th>
                     <th>Currency</th>
                     <th>Closing Date</th>
-                    <th>Closed</th>
-                    <th>Won</th>
-                    <th>Deleted</th>
                 </tr>
 
                 <tr th:each="opportunity : ${opportunities}">
@@ -38,9 +35,10 @@
                     <td th:text="${opportunity.description}"></td>
                     <td th:text="${opportunity.amount}"></td>
                     <td th:text="${opportunity.currencyIsoCode}"></td>
-                    <td th:text="${opportunity.isClosed}"></td>
-                    <td th:text="${opportunity.isWon}"></td>
-                    <td th:text="${opportunity.isDeleted}"></td>
+                    <td th:text="${opportunity.closeDate}"></td>
+                    <td><a th:href="${'/opportunity/show/' + opportunity.id}">View</a></td>
+                    <td><a th:href="${'/opportunity/edit/' + opportunity.id}">Edit</a></td>
+                    <td><a th:href="${'/opportunity/delete/' + opportunity.id}">Delete</a></td>
                 </tr>
             </table>
         </div>

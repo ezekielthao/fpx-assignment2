@@ -2,6 +2,7 @@ package com.zeke.fpx.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -22,9 +23,15 @@ public class Opportunity {
     private Byte[] isClosed;
     private Byte[] isDeleted;
     private Byte[] isWon;
-    private boolean isClosedBool;
-    private boolean isDeletedBool;
-    private boolean isWonBool;
+
+    @Transient
+    private boolean closed;
+
+    @Transient
+    private boolean deleted;
+
+    @Transient
+    private boolean won;
 
     public String getId() {
         return id;
@@ -98,27 +105,27 @@ public class Opportunity {
         this.isWon = isWon;
     }
 
-    public boolean isClosedBool() {
-        return isClosedBool;
+    public boolean isClosed() {
+        return closed;
     }
 
-    public void setClosedBool(boolean closedBool) {
-        isClosedBool = closedBool;
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 
-    public boolean isDeletedBool() {
-        return isDeletedBool;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setDeletedBool(boolean deletedBool) {
-        isDeletedBool = deletedBool;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
-    public boolean isWonBool() {
-        return isWonBool;
+    public boolean isWon() {
+        return won;
     }
 
-    public void setWonBool(boolean wonBool) {
-        isWonBool = wonBool;
+    public void setWon(boolean won) {
+        this.won = won;
     }
 }
