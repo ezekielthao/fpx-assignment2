@@ -17,23 +17,34 @@ public class Opportunity {
     @Id
     @Column(name="ID")
     private String id;
+
     private String name;
+
     private BigDecimal amount;
+
     @Column(name="CloseDate")
     private Date closeDate;
+
     @Column(name="CurrencyIsoCode")
     private String currencyIsoCode;
+
     private String description;
+
     @Column(name="IsClosed")
     private Byte[] isClosed;
+
     @Column(name="IsDeleted")
     private Byte[] isDeleted;
+
     @Column(name="IsWon")
     private Byte[] isWon;
+
     @Transient
     private boolean closed;
+
     @Transient
     private boolean deleted;
+
     @Transient
     private boolean won;
 
