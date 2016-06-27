@@ -1,9 +1,9 @@
 package com.zeke.fpx.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,23 +15,33 @@ import java.util.Date;
 public class Opportunity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    @Column(name="ID")
+    private String id;
     private String name;
     private BigDecimal amount;
+    @Column(name="CloseDate")
     private Date closeDate;
+    @Column(name="CurrencyIsoCode")
     private String currencyIsoCode;
     private String description;
+    @Column(name="IsClosed")
     private Byte[] isClosed;
+    @Column(name="IsDeleted")
     private Byte[] isDeleted;
+    @Column(name="IsWon")
     private Byte[] isWon;
+    @Transient
+    private boolean closed;
+    @Transient
+    private boolean deleted;
+    @Transient
+    private boolean won;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -97,5 +107,29 @@ public class Opportunity {
 
     public void setIsWon(Byte[] isWon) {
         this.isWon = isWon;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public boolean isWon() {
+        return won;
+    }
+
+    public void setWon(boolean won) {
+        this.won = won;
     }
 }

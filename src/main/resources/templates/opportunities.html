@@ -22,29 +22,29 @@
             <table class="table table-striped">
                 <tr>
                     <th>Name</th>
+                    <th>ID</th>
                     <th>Description</th>
                     <th>Amount</th>
                     <th>Currency</th>
                     <th>Closing Date</th>
-                    <th>Closed</th>
-                    <th>Won</th>
-                    <th>Deleted</th>
                 </tr>
 
                 <tr th:each="opportunity : ${opportunities}">
                     <td th:text="${opportunity.name}"></td>
+                    <td th:text="${opportunity.id}"></td>
                     <td th:text="${opportunity.description}"></td>
                     <td th:text="${opportunity.amount}"></td>
                     <td th:text="${opportunity.currencyIsoCode}"></td>
-                    <td th:text="${opportunity.isClosed}"></td>
-                    <td th:text="${opportunity.isWon}"></td>
-                    <td th:text="${opportunity.isDeleted}"></td>
+                    <td th:text="${opportunity.closeDate}"></td>
+                    <td><a th:href="${'/opportunity/show/' + opportunity.id}">View</a></td>
+                    <td><a th:href="${'/opportunity/edit/' + opportunity.id}">Edit</a></td>
+                    <td><a th:href="${'/opportunity/delete/' + opportunity.id}">Delete</a></td>
                 </tr>
             </table>
         </div>
         <div class="row">
             <div class="col-sm-3">
-                <a href="/opportunity/new">New Product</a>
+                <a href="/opportunity/new">New Opportunity</a>
             </div>
         </div>
     </div>
